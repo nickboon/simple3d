@@ -1,87 +1,53 @@
-function moveTo(p) {
-    return 'M' + p.x + ',' + p.y;
-}
+const moveTo = point => `M${point.x} ${point.y}`;
+const lineTo = point => `L${point.x} ${point.y}`;
+const linesTo = points => points.map(p => lineTo(p)).join('');
 
-function lineTo(p) {
-    return 'L' + p.x + ' ' + p.y;
-}
+const createPolygonFill = (points, colour, opacity) =>
+    `<path 
+        d="${moveTo(points[0])}${linesTo(points.slice(1))}"
+        fill="${colour}"
+        opacity="${opacity}"
+    />`;
 
-function createPolygonFill(points, colour, alpha) {
-    var fill = '<path d="';
+const createLine = (a, b, colour, opacity) =>
+    `<path 
+        d="${moveTo(a)} ${lineTo(b)}"    
+        stroke="${colour}"
+        opacity="${opacity}"
+    />`;
 
-    var maxIndex = points.length - 1;
-    fill = fill + moveTo(points[maxIndex]);
+const createPolygonLines = (points, colour, opacity) =>
+    points.map((p, index) => createLine(
+        p,
+        points[index + 1] || points[0],
+        colour,
+        opacity
+    ));
 
-    for (var i = maxIndex - 1; i >= 0; i = i - 1) {
-        fill = fill + lineTo(points[i], points[i], colour, alpha) + ' ';
-    }
+const buildSvg = paths =>
+    `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    ${paths.join('')}
+    </svg>`;
 
-    fill = fill + '" ' +
-        'fill="' + colour + '" ' +
-        'opacity="' + alpha + '" />';
-
-    return fill;
-};
-
-function createLine(a, b, colour, alpha) {
-    return '<path d="' +
-        moveTo(a) +
-        lineTo(b) +
-        '" ' +
-        'stroke="' + colour + '" ' +
-        'opacity="' + alpha + '" />';
-}
-
-function createPolygonLines(points, colour, alpha) {
-    var lines = [];
-
-    var maxIndex = points.length - 1;
-    for (var i = maxIndex; i > 0; i = i - 1) {
-        lines.push(createLine(points[i], points[i - 1], colour, alpha));
-    }
-    lines.push(createLine(points[0], points[maxIndex], colour, alpha));
-
-    return lines;
-}
-
-function addElements(elements) {
-    var svg = '';
-    elements.forEach(element => {
-        svg = svg + element;
+const createPoint = (x = 0, y = 0, z = 0) =>
+    ({
+        x,
+        y,
+        z
     });
-    return svg;
-}
 
-function buildSvg(elements) {
-    return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
-        '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' +
-        '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
-        addElements(elements) +
-        '</svg>';
-}
-
-function createPoint(x, y, z) {
-    x = x || 0;
-    y = y || 0;
-    z = z || 0;
-
-    return {
-        x: x,
-        y: y,
-        z: z
-    };
-}
-
-var points = [
+const points = [
     createPoint(50, 50),
     createPoint(100, 50),
     createPoint(100, 100),
     createPoint(50, 100)
 ];
-var lineColour = '#f00';
-var fillColour = '#0f0';
-var alpha = .5;
-var lines = createPolygonLines(points, lineColour, alpha);
-var fill = createPolygonFill(points, fillColour, alpha);
-var svg = buildSvg([fill, lines]);
+const lineColour = '#f00';
+const fillColour = '#0f0';
+const opacity = .5;
+const lines = createPolygonLines(points, lineColour, opacity);
+const fill = createPolygonFill(points, fillColour, opacity);
+const svg = buildSvg([fill, lines]);
 document.getElementById('simple3d').innerHTML = svg;
