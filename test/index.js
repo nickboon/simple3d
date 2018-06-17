@@ -29,15 +29,14 @@ const paths = [
     new Line([g, h], lineColour, opacity),
     new Line([h, e], lineColour, opacity)
 ];
+const canvas = document.getElementById('simple3d');
 
-let builtSvg = svg(paths);
-console.log(builtSvg);
+function transform(points) {
+    points.forEach(p => p.x += .1);
+}
 
-// transform square2
-e.x += 25;
-f.x += 25;
-g.x += 25;
-h.x += 25;
-builtSvg = svg(paths);
-
-document.getElementById('simple3d').innerHTML = builtSvg;
+(function animate() {
+    window.requestAnimationFrame(animate);
+    transform([e, f, g, h]);
+    canvas.innerHTML = svg(paths);
+})();
