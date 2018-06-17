@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Rough and ready 3D drawings.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tape test/*.tests.js",
     "watch": "watchify test/index.js -o test/bundle.js -t [ babelify --presets [ \"@babel/preset-env\"] ]"
   },
   "author": "Nick Boon",
@@ -29,6 +29,7 @@
     "@babel/core": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
     "babelify": "^9.0.0",
+    "tape": "^4.9.1",
     "watchify": "^3.11.0"
   }
 }

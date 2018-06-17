@@ -1,3 +1,7 @@
+const {
+    createPoint
+} = require('../point');
+
 const moveTo = point => `M${point.x} ${point.y}`;
 const lineTo = point => `L${point.x} ${point.y}`;
 const linesTo = points => points.map(p => lineTo(p)).join('');
@@ -30,13 +34,6 @@ const buildSvg = paths =>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     ${paths.join('')}
     </svg>`;
-
-const createPoint = (x = 0, y = 0, z = 0) =>
-    ({
-        x,
-        y,
-        z
-    });
 
 const points = [
     createPoint(50, 50),
