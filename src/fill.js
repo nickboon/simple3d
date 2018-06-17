@@ -1,12 +1,12 @@
+const Element = require('./element');
+
 const moveTo = point => `M${point.x} ${point.y}`;
 const lineTo = point => `L${point.x} ${point.y}`;
 const linesTo = points => points.map(p => lineTo(p)).join(' ');
 
-class Fill {
+class Fill extends Element {
     constructor(points, colour, opacity) {
-        this.points = points;
-        this.colour = colour;
-        this.opacity = opacity;
+        super(points, colour, opacity);
     }
 
     get interpolate() {

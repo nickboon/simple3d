@@ -1,8 +1,8 @@
-class Line {
+const Element = require('./element');
+
+class Line extends Element {
     constructor(points, colour, opacity) {
-        this.points = points;
-        this.colour = colour;
-        this.opacity = opacity;
+        super(points, colour, opacity);
     }
 
     get interpolate() {
