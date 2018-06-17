@@ -1,10 +1,15 @@
+function getNearestZ(points) {
+    return Math.min(...points.map(p => p.z));
+}
+
+function nearest(a, b) {
+    if (getNearestZ(a.points) < getNearestZ(b.points)) return 1;
+    if (getNearestZ(a.points) > getNearestZ(b.points)) return -1;
+    return 0;
+};
+
 module.exports = paths => {
-    const getNearestZ = points => Math.min(...points.map(p => p.z));
-    paths.sort((a, b) => {
-        if (getNearestZ(a.points) > getNearestZ(b.points)) return 1;
-        if (getNearestZ(a.points) < getNearestZ(b.points)) return -1;
-        return 0;
-    });
+    paths.sort(nearest);
 
     return `
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>

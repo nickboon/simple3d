@@ -1,50 +1,43 @@
-const {
-    createPoint
-} = require('../point');
+const Point = require('../src/point');
+const Line = require('../src/line');
+const Fill = require('../src/fill');
+const svg = require('../src/svg');
 
-const moveTo = point => `M${point.x} ${point.y}`;
-const lineTo = point => `L${point.x} ${point.y}`;
-const linesTo = points => points.map(p => lineTo(p)).join('');
-
-const createPolygonFill = (points, colour, opacity) =>
-    `<path 
-        d="${moveTo(points[0])}${linesTo(points.slice(1))}"
-        fill="${colour}"
-        opacity="${opacity}"
-    />`;
-
-const createLine = (a, b, colour, opacity) =>
-    `<path 
-        d="${moveTo(a)} ${lineTo(b)}"    
-        stroke="${colour}"
-        opacity="${opacity}"
-    />`;
-
-const createPolygonLines = (points, colour, opacity) =>
-    points.map((p, index) => createLine(
-        p,
-        points[index + 1] || points[0],
-        colour,
-        opacity
-    ));
-
-const buildSvg = paths =>
-    `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    ${paths.join('')}
-    </svg>`;
-
-const points = [
-    createPoint(50, 50),
-    createPoint(100, 50),
-    createPoint(100, 100),
-    createPoint(50, 100)
-];
+const a = new Point(50, 50);
+const b = new Point(100, 50);
+const c = new Point(100, 100);
+const d = new Point(50, 100);
+const e = new Point(75, 50, 1);
+const f = new Point(125, 50, 1);
+const g = new Point(125, 100, 1);
+const h = new Point(75, 100, 1);
 const lineColour = '#f00';
-const fillColour = '#0f0';
+const fillColour1 = '#0f0';
+const fillColour2 = '#00f';
 const opacity = .5;
-const lines = createPolygonLines(points, lineColour, opacity);
-const fill = createPolygonFill(points, fillColour, opacity);
-const svg = buildSvg([fill, lines]);
-document.getElementById('simple3d').innerHTML = svg;
+const paths = [
+    // square1
+    new Fill([a, b, c, d], fillColour1, opacity),
+    new Line([a, b], lineColour, opacity),
+    new Line([b, c], lineColour, opacity),
+    new Line([c, d], lineColour, opacity),
+    new Line([d, a], lineColour, opacity),
+    // square2
+    new Fill([e, f, g, h], fillColour2, opacity),
+    new Line([e, f], lineColour, opacity),
+    new Line([f, g], lineColour, opacity),
+    new Line([g, h], lineColour, opacity),
+    new Line([h, e], lineColour, opacity)
+];
+
+let builtSvg = svg(paths);
+console.log(builtSvg);
+
+// transform square2
+e.x += 25;
+f.x += 25;
+g.x += 25;
+h.x += 25;
+builtSvg = svg(paths);
+
+document.getElementById('simple3d').innerHTML = builtSvg;
