@@ -1,16 +1,12 @@
-const Element = require('./element');
+const Path = require('./path');
 
-const moveTo = point => `M${point.x} ${point.y}`;
-const lineTo = point => `L${point.x} ${point.y}`;
-const linesTo = points => points.map(p => lineTo(p)).join(' ');
-
-class Fill extends Element {
+class Fill extends Path {
     constructor(points, colour, opacity) {
         super(points, colour, opacity);
     }
 
-    get interpolate() {
-        return () => `<path d="${moveTo(this.points[0])} ${linesTo(this.points.slice(1))}" fill="${this.colour}" opacity="${this.opacity}" />`;
+    update() {
+        return `<path d="M${this.points[0].x} ${this.points[0].y} L${this.points[1].x} ${this.points[1].y} ${this.points.slice(2).map(p => `L${p.x} ${p.y}`).join(' ')}" fill="${this.colour}" opacity="${this.opacity}" />`;
     }
 };
 

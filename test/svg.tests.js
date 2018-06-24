@@ -1,5 +1,5 @@
 const test = require('tape');
-const svg = require('../src/svg');
+const sut = require('../src/svg');
 const Point = require('../src/point');
 const Line = require('../src/line');
 
@@ -22,7 +22,7 @@ test('svg', assert => {
     </svg>`;
 
     assert.equal(
-        svg(paths),
+        sut(paths),
         expected,
         'should return a complete svg file from a list of paths.'
     );
@@ -42,7 +42,7 @@ test('svg', assert => {
     farthest.z = nearest.z - 1;
 
     assert.equal(
-        svg(paths),
+        sut(paths),
         expected,
         'should produce the correct svg file from a list of paths with updated positions.'
     );
