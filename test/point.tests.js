@@ -1,7 +1,7 @@
 const test = require('tape');
 const Sut = require('../src/point');
 
-test('Point constructor', assert => {
+test('point constructor(x, y, z)', assert => {
     assert.deepEqual(
         new Sut(), {
             x: 0,

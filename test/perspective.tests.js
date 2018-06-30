@@ -13,7 +13,7 @@ const createScreenPoint = (x, y) => ({
     y
 });
 
-test('toScreen', assert => {
+test('perspective.toScreen(point)', assert => {
     assert.deepEqual(
         new Sut(options).toScreen(new Point(0, 0, 1)),
         createScreenPoint(1, 1),

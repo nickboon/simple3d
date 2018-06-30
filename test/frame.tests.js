@@ -1,10 +1,10 @@
 const test = require('tape');
-const Sut = require('../src/frame');
 const Point = require('../src/point');
 const Line = require('../src/line');
 const Perspective = require('../src/perspective');
+const Sut = require('../src/frame');
 
-test('build', assert => {
+test('frame.build(paths)', assert => {
     const perspective = new Perspective({
         focalLength: 2,
         vanishingPointX: 2,

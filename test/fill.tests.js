@@ -3,7 +3,7 @@ const Point = require('../src/point');
 const Perspective = require('../src/perspective');
 const Sut = require('../src/fill');
 
-test('fill.update', assert => {
+test('fill.update(perspective)', assert => {
     assert.equal(
         new Sut([
             new Point(),
