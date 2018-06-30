@@ -1,16 +1,16 @@
 const Point = require('../src/point');
 const Line = require('../src/line');
 const Fill = require('../src/fill');
-const svg = require('../src/svg');
+const Stage = require('../src/stage');
 
-const a = new Point(50, 50);
-const b = new Point(100, 50);
-const c = new Point(100, 100);
-const d = new Point(50, 100);
-const e = new Point(75, 50, 1);
-const f = new Point(125, 50, 1);
-const g = new Point(125, 100, 1);
-const h = new Point(75, 100, 1);
+const a = new Point(-50, -50);
+const b = new Point(50, -50);
+const c = new Point(50, 50);
+const d = new Point(-50, 50);
+const e = new Point(-25, -50, 100);
+const f = new Point(75, -50, 100);
+const g = new Point(75, 50, 100);
+const h = new Point(-25, 50, 100);
 const lineColour = '#f00';
 const fillColour1 = '#0f0';
 const fillColour2 = '#00f';
@@ -29,14 +29,10 @@ const paths = [
     new Line([g, h], lineColour, opacity),
     new Line([h, e], lineColour, opacity)
 ];
-const canvas = document.getElementById('simple3d');
+const transformers = [{
+    transform: () => [e, f, g, h].forEach(p => p.x += .1)
+}];
 
-function transform(points) {
-    points.forEach(p => p.x += .1);
-}
-
-(function animate() {
-    window.requestAnimationFrame(animate);
-    transform([e, f, g, h]);
-    canvas.innerHTML = svg(paths);
-})();
+const stage = new Stage();
+stage.paths = paths;
+stage.transformers = transformers;

@@ -1,39 +1,34 @@
-const BadArgumentError = require('./badArgumentError');
-
 const _fl = new WeakMap();
 const _vpx = new WeakMap();
 const _vpy = new WeakMap();
+const _getScale = new WeakMap();
+const _getScreenX = new WeakMap();
+const _getScreenY = new WeakMap();
 
 class Perspective {
     constructor({
         focalLength,
         vanishingPointX,
         vanishingPointY
-    } = {}) {
-        if (!focalLength || Number.isNaN(focalLength)) BadArgumentError.throwFor('focalLength');
-        if (!vanishingPointX || Number.isNaN(vanishingPointX)) BadArgumentError.throwFor('vanishingPointX');
-        if (!vanishingPointY || Number.isNaN(vanishingPointY)) BadArgumentError.throwFor('vanishingPointY');
-
+    }) {
         _fl.set(this, focalLength);
         _vpx.set(this, vanishingPointX);
         _vpy.set(this, vanishingPointY);
+
+        _getScale.set(this, point => {
+            const fl = _fl.get(this);
+            return fl / (fl + point.z);
+        });
+
+        _getScreenX.set(this, point => _vpx.get(this) + point.x * _getScale.get(this)(point));
+        _getScreenY.set(this, point => _vpy.get(this) + point.y * _getScale.get(this)(point));
     }
 
-    getScale(point) {
-        const fl = _fl.get(this);
-        return fl / (fl + point.z);
-    }
-
-    getScreenX(point) {
-        return _vpx.get(this) + point.x * this.getScale(point);
-    }
-
-    getScreenY(point) {
-        return _vpy.get(this) + point.y * this.getScale(point);
-    }
-
-    isPointBehindViewer(z) {
-        return z > -this.fl;
+    toScreen(point) {
+        return {
+            x: _getScreenX.get(this)(point),
+            y: _getScreenY.get(this)(point)
+        };
     }
 }
 
