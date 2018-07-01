@@ -13,6 +13,7 @@ class Cube extends Solid {
             new Point(halfW, -halfW, -halfW),
             new Point(halfW, halfW, -halfW),
             new Point(-halfW, halfW, -halfW),
+
             new Point(halfW, -halfW, halfW),
             new Point(-halfW, -halfW, halfW),
             new Point(-halfW, halfW, halfW),
