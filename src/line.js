@@ -1,10 +1,6 @@
 const Path = require('./path');
 
 class Line extends Path {
-    constructor(points, colour, opacity) {
-        super(points, colour, opacity);
-    }
-
     update(perspective) {
         const pointA = perspective.toScreen(this.points[0]);
         const pointB = perspective.toScreen(this.points[1]);

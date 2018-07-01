@@ -23,11 +23,8 @@ class Rotation {
         _toIndex.set(this, increment => {
             const totalIncrements = _angles.get(this).length;
             if (increment < 0) return totalIncrements + increment;
-
-            const mod = increment % totalIncrements;
-            if (increment >= totalIncrements) return mod;
-            if (increment <= -totalIncrements) return totalIncrements + mod;
-
+            if (increment >= totalIncrements) return increment % totalIncrements;
+            if (increment <= -totalIncrements) return totalIncrements + increment % totalIncrements;
             return increment;
         });
     }
@@ -35,12 +32,9 @@ class Rotation {
     y(point, increment) {
         const angles = _angles.get(this);
         const angle = angles[_toIndex.get(this)(increment)];
-        const cos = angle.cos;
-        const sin = angle.sin;
-        const newX = point.x * cos - point.z * sin;
-        const newZ = point.z * cos + point.x * sin;
+        const newX = point.x * angle.cos - point.z * angle.sin;
+        point.z = point.z * angle.cos + point.x * angle.sin;
         point.x = newX;
-        point.z = newZ;
     }
 }
 
