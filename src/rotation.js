@@ -29,11 +29,27 @@ class Rotation {
         });
     }
 
+    x(point, increment) {
+        const angles = _angles.get(this);
+        const angle = angles[_toIndex.get(this)(increment)];
+        const newY = point.y * angle.cos - point.z * angle.sin;
+        point.z = point.z * angle.cos + point.y * angle.sin;
+        point.y = newY;
+    }
+
     y(point, increment) {
         const angles = _angles.get(this);
         const angle = angles[_toIndex.get(this)(increment)];
         const newX = point.x * angle.cos - point.z * angle.sin;
         point.z = point.z * angle.cos + point.x * angle.sin;
+        point.x = newX;
+    }
+
+    z(point, increment) {
+        const angles = _angles.get(this);
+        const angle = angles[_toIndex.get(this)(increment)];
+        const newX = point.x * angle.cos - point.y * angle.sin;
+        point.y = point.y * angle.cos + point.x * angle.sin;
         point.x = newX;
     }
 }

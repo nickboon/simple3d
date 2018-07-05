@@ -21,6 +21,33 @@ test('rotation constructor(totalIncrements)', assert => {
     assert.end();
 });
 
+test('rotation.x(increments)', assert => {
+    const point = new Point(0, 0, 1);
+    const sut = new Sut(4);
+
+    sut.x(point, 1);
+    assert.deepEqual(
+        point,
+        new Point(0, -1, cos90),
+        'should rotate point cw about y axis given a positive increment.'
+    );
+
+    sut.x(point, 400);
+    assert.deepEqual(
+        point,
+        new Point(0, -1, cos90),
+        'should maintain point correctly over several rotations.'
+    );
+
+    sut.x(point, -1);
+    assert.deepEqual(
+        point,
+        new Point(0, -cos270 - cos90 * sin270, 1),
+        'should rotate point ccw about y axis given a negative increment.'
+    );
+    assert.end();
+});
+
 test('rotation.y(increments)', assert => {
     const point = new Point(1);
     const sut = new Sut(4);
@@ -43,6 +70,33 @@ test('rotation.y(increments)', assert => {
     assert.deepEqual(
         point,
         new Point(1, 0, cos270 + cos90 * sin270),
+        'should rotate point ccw about y axis given a negative increment.'
+    );
+    assert.end();
+});
+
+test('rotation.z(increments)', assert => {
+    const point = new Point(1);
+    const sut = new Sut(4);
+
+    sut.z(point, 1);
+    assert.deepEqual(
+        point,
+        new Point(cos90, 1, 0),
+        'should rotate point cw about y axis given a positive increment.'
+    );
+
+    sut.z(point, 400);
+    assert.deepEqual(
+        point,
+        new Point(cos90, 1, 0),
+        'should maintain point correctly over several rotations.'
+    );
+
+    sut.z(point, -1);
+    assert.deepEqual(
+        point,
+        new Point(1, cos270 + cos90 * sin270, 0),
         'should rotate point ccw about y axis given a negative increment.'
     );
     assert.end();
