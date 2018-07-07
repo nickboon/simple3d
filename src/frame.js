@@ -3,8 +3,10 @@ const Perspective = require('./perspective');
 const _width = new WeakMap();
 const _height = new WeakMap();
 const _perspective = new WeakMap();
+const _paths = new WeakMap();
 const _nearest = new WeakMap();
 const _getNearestZ = new WeakMap();
+
 
 class Frame {
     constructor(
@@ -19,6 +21,7 @@ class Frame {
         _width.set(this, width);
         _height.set(this, height);
         _perspective.set(this, perspective);
+        _paths.set(this, []);
 
         _nearest.set(this, (a, b) => {
             const getNearestZ = _getNearestZ.get(this);
@@ -31,7 +34,12 @@ class Frame {
         _getNearestZ.set(this, points => Math.min(...points.map(p => p.z)));
     }
 
-    build(paths) {
+    set paths(paths) {
+        _paths.set(this, paths);
+    };
+
+    update() {
+        const paths = _paths.get(this);
         paths.sort(_nearest.get(this));
 
         return `
