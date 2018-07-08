@@ -7,10 +7,10 @@ const _getScreenY = new WeakMap();
 
 class Perspective {
     constructor({
-        focalLength,
+        focalLength = 350,
         vanishingPointX,
         vanishingPointY
-    }) {
+    } = {}) {
         _fl.set(this, focalLength);
         _vpx.set(this, vanishingPointX);
         _vpy.set(this, vanishingPointY);

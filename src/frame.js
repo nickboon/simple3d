@@ -10,16 +10,19 @@ const _getNearestZ = new WeakMap();
 class Frame {
     constructor(
         width,
-        height,
-        perspective = new Perspective({
-            focalLength: 350,
-            vanishingPointX: width / 2,
-            vanishingPointY: height / 2
-        })
+        height, {
+            focalLength,
+            vanishingPointX = width / 2,
+            vanishingPointY = height / 2
+        } = {}
     ) {
         _width.set(this, width);
         _height.set(this, height);
-        _perspective.set(this, perspective);
+        _perspective.set(this, new Perspective({
+            focalLength,
+            vanishingPointX,
+            vanishingPointY
+        }));
         _paths.set(this, []);
 
         _nearest.set(this, (a, b) => {

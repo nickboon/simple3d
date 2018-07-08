@@ -10,10 +10,10 @@ class Stage {
         canvas = document.getElementById('simple3d'),
         width = canvas.clientWidth,
         height = canvas.clientHeight,
-        perspective
+        perspectiveOptions
     } = {}) {
         _canvas.set(this, canvas);
-        _frame.set(this, new Frame(width, height, perspective));
+        _frame.set(this, new Frame(width, height, perspectiveOptions));
         _transformers.set(this, []);
 
         _animate.set(this, () => {
