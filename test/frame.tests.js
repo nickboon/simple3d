@@ -4,7 +4,7 @@ const Line = require('../src/line');
 const Perspective = require('../src/perspective');
 const Sut = require('../src/frame');
 
-test('frame.build(paths)', assert => {
+test('frame.update()', assert => {
     const perspective = new Perspective({
         focalLength: 2,
         vanishingPointX: 2,
@@ -21,6 +21,7 @@ test('frame.build(paths)', assert => {
     ];
 
     const sut = new Sut(0, 0, perspective);
+    sut.paths = paths;
 
     let expected = `
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -31,7 +32,7 @@ test('frame.build(paths)', assert => {
         </svg>`;
 
     assert.equal(
-        sut.build(paths),
+        sut.update(),
         expected,
         'should return a complete svg file from a list of paths.'
     );
@@ -48,7 +49,7 @@ test('frame.build(paths)', assert => {
     farthest.z = nearest.z - 1;
 
     assert.equal(
-        sut.build(paths),
+        sut.update(),
         expected,
         'should produce the correct svg file from a list of paths with updated positions.'
     );
