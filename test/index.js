@@ -1,17 +1,12 @@
-const Stage = require('../src/stage');
-const Cube = require('./cube');
-const DefaultInputTransformer = require('./defaultInputTransformer');
-const Rotator = require('./rotator');
+const Simple3d = require('../src/simple3d');
 const Defaults = require('./debugDefaults');
-const {
-    solidOptions
-} = new Defaults();
+const Cube = require('./cube');
 
-const cube = new Cube(solidOptions);
-const stage = new Stage();
+const defaults = new Defaults();
+const cube = new Cube(defaults.solidOptions);
+const stage = new Simple3d.Stage();
 stage.paths = cube.paths;
-
 stage.transforms = [
-    new Rotator(cube.points, 1, 1),
-    new DefaultInputTransformer(cube.points)
+    new Simple3d.transformers.Rotator(cube.points, 1, 1),
+    new Simple3d.transformers.DefaultInputTransformer(cube.points)
 ];

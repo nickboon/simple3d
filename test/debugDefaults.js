@@ -1,6 +1,6 @@
-const Defaults = require('../src/defaults');
+const Simple3d = require('../src/simple3d');
 
-class DebugDefaults extends Defaults {
+class DebugDefaults extends Simple3d.Defaults {
     constructor() {
         super({
             solidOptions: {
