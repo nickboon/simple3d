@@ -3,7 +3,7 @@ const BadArgumentError = require('./badArgumentError');
 const _points = new WeakMap();
 
 class Path {
-    constructor(points, colour = '#000', opacity = 0.5) {
+    constructor(points, colour = '#000', opacity = .5) {
         if ((!Array.isArray(points) || points.length < 2)) throw new BadArgumentError('points');
 
         _points.set(this, points);

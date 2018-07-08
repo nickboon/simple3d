@@ -1,15 +1,14 @@
-const Solid = require('./solid');
+const Solid = require('../src/solid');
 const Point = require('../src/point');
-const Points = require('../src/points');
 const Line = require('../src/line');
 const Fill = require('../src/fill');
 
 class Cube extends Solid {
-    constructor(width = 100, lineColour, fillColour = '#0f0', opacity) {
-        super(lineColour, fillColour, opacity);
+    constructor(solidOptions, width = 100) {
+        super(solidOptions);
 
         const halfW = width / 2;
-        const points = new Points([
+        const points = [
             new Point(-halfW, -halfW, -halfW),
             new Point(halfW, -halfW, -halfW),
             new Point(halfW, halfW, -halfW),
@@ -19,12 +18,12 @@ class Cube extends Solid {
             new Point(-halfW, -halfW, halfW),
             new Point(-halfW, halfW, halfW),
             new Point(halfW, halfW, halfW),
-        ]);
+        ];
 
-        this.points = points;
+        this.points.push(...points);
 
-        const createLine = points => new Line(points, lineColour, opacity);
-        const createFill = points => new Fill(points, fillColour, opacity);
+        const createLine = points => new Line(points, this.lineColour, this.opacity);
+        const createFill = points => new Fill(points, this.fillColour, this.opacity);
         this.paths = [
             createFill([
                 points[0],
