@@ -4,13 +4,13 @@ const _angles = new WeakMap();
 const _toIndex = new WeakMap();
 
 class Rotation {
-    constructor(totalIncrements) {
-        if (totalIncrements && totalIncrements < 2) throw new BadArgumentError('totalIncrements');
+    constructor(increments = 360) {
+        if (increments && increments < 2) throw new BadArgumentError('totalIncrements');
 
         _angles.set(this, (() => {
             const angles = [];
-            for (let i = totalIncrements - 1; i >= 0; i -= 1) {
-                const angle = i * Math.PI * 2 / totalIncrements;
+            for (let i = increments - 1; i >= 0; i -= 1) {
+                const angle = i * Math.PI * 2 / increments;
 
                 angles[i] = {
                     sin: Math.sin(angle),

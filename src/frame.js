@@ -7,7 +7,6 @@ const _paths = new WeakMap();
 const _nearest = new WeakMap();
 const _getNearestZ = new WeakMap();
 
-
 class Frame {
     constructor(
         width,

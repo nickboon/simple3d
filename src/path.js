@@ -1,4 +1,5 @@
 const BadArgumentError = require('./badArgumentError');
+
 const _points = new WeakMap();
 
 class Path {
