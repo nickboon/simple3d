@@ -13,12 +13,12 @@ class Stage {
         perspective
     } = {}) {
         _canvas.set(this, canvas);
-        _frame.set(this, new Frame(paths, width, height, perspective));
+        _frame.set(this, new Frame(width, height, perspective));
         _transforms.set(this, []);
 
         _animate.set(this, () => {
             window.requestAnimationFrame(_animate.get(this));
-            _transforms.get(this).forEach(t => t());
+            _transforms.get(this).forEach(t => t.transform());
             _canvas.get(this).innerHTML = _frame.get(this).update();
         });
 
