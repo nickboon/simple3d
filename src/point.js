@@ -4,6 +4,16 @@ class Point {
         this.y = y;
         this.z = z;
     }
+
+    shiftX(increment) {
+        this.x += increment;
+    }
+    shiftY(increment) {
+        this.y += increment;
+    }
+    shiftZ(increment) {
+        this.z += increment;
+    }
 }
 
 module.exports = Point;

@@ -1,5 +1,6 @@
 const Solid = require('./solid');
 const Point = require('../src/point');
+const Points = require('../src/points');
 const Line = require('../src/line');
 const Fill = require('../src/fill');
 
@@ -8,7 +9,7 @@ class Cube extends Solid {
         super(lineColour, fillColour, opacity);
 
         const halfW = width / 2;
-        const points = [
+        const points = new Points([
             new Point(-halfW, -halfW, -halfW),
             new Point(halfW, -halfW, -halfW),
             new Point(halfW, halfW, -halfW),
@@ -18,7 +19,7 @@ class Cube extends Solid {
             new Point(-halfW, -halfW, halfW),
             new Point(-halfW, halfW, halfW),
             new Point(halfW, halfW, halfW),
-        ];
+        ]);
 
         this.points = points;
 
