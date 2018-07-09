@@ -41,14 +41,18 @@ class Frame {
     };
 
     update() {
-        const paths = _paths.get(this);
-        paths.sort(_nearest.get(this));
+        const perspective = _perspective.get(this);
+        const nearest = _nearest.get(this);
+        const getNearestZ = _getNearestZ.get(this);
+        const paths = _paths.get(this)
+            .sort(nearest)
+            .filter(p => !perspective.isBehindViewer(getNearestZ(p.points)));
 
         return `
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${_width.get(this)}" height="${_height.get(this)}">
-            ${paths.map(path => path.update(_perspective.get(this))).join(`
+            ${paths.map(path => path.update(perspective)).join(`
             `)}
         </svg>`;
     }

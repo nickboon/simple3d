@@ -30,6 +30,10 @@ class Perspective {
             y: _getScreenY.get(this)(point)
         };
     }
+
+    isBehindViewer(z) {
+        return z < -_fl.get(this);
+    }
 }
 
 module.exports = Perspective;

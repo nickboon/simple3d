@@ -40,3 +40,12 @@ test('perspective.toScreen(point)', assert => {
 
     assert.end();
 });
+
+test('perspective.isBehindViewer(z)', assert => {
+    assert.true(
+        new Sut(options).isBehindViewer(-2),
+        'should return true if the number is less than -fl.'
+    );
+
+    assert.end();
+});
