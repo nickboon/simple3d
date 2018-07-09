@@ -1,15 +1,14 @@
 const test = require('tape');
 const Point = require('../src/point');
 const Line = require('../src/line');
-const Perspective = require('../src/perspective');
 const Sut = require('../src/frame');
 
 test('frame.update()', assert => {
-    const perspective = new Perspective({
+    const perspectiveOptions = {
         focalLength: 2,
         vanishingPointX: 2,
         vanishingPointY: 2
-    });
+    };
 
     const nearest = new Point(0, 0, 0);
     const middle = new Point(1, 1, 2);
@@ -20,7 +19,7 @@ test('frame.update()', assert => {
         new Line([middle, farthest], '#f00', '.7')
     ];
 
-    const sut = new Sut(0, 0, perspective);
+    const sut = new Sut(0, 0, perspectiveOptions);
     sut.paths = paths;
 
     let expected = `
