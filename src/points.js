@@ -26,6 +26,10 @@ class Points extends Array {
             rotate.z(p, z);
         });
     }
+
+    merge(...otherPoints) {
+        this.push(...[].concat(...otherPoints));
+    }
 }
 
 module.exports = Points;

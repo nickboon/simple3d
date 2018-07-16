@@ -2,6 +2,7 @@ const test = require('tape');
 const Point = require('../src/point');
 const Sut = require('../src/points');
 
+const cos90 = 6.123233995736766e-17;
 const p = new Point();
 
 let sut = new Sut();
@@ -39,8 +40,6 @@ test('points.shift(x, y, z)', assert => {
 });
 
 test('points.rotate(x, y, z)', assert => {
-    const cos90 = 6.123233995736766e-17;
-
     sut = new Sut([
         new Point(0, 0, 1),
         new Point(0, 0, -1)
@@ -58,5 +57,34 @@ test('points.rotate(x, y, z)', assert => {
         () => sut.rotate(),
         'should not throw if missing arguments.'
     );
+    assert.end();
+});
+
+test('points.merge(...otherPoints)', assert => {
+    const a = new Point(1, 1, 1);
+    const b = new Point();
+    const c = new Point(0, 0, 1);
+    const d = new Point(0, 0, -1);
+    const otherPoints1 = new Sut([a], 100);
+    const otherPoints2 = new Sut([b], 10);
+    sut = new Sut([c, d], 4);
+    sut.merge(otherPoints1, otherPoints2);
+
+    assert.deepEqual(
+        sut, [c, d, a, b],
+        'should merge other points into this one.'
+    );
+
+    sut.rotate(1);
+    assert.deepEqual(
+        sut, [
+            new Point(0, -1, cos90),
+            new Point(0, 1, -cos90),
+            new Point(1, -0.9999999999999999, 1),
+            new Point()
+        ],
+        'and should retain original rotation increments.'
+    );
+
     assert.end();
 });
