@@ -30,6 +30,10 @@ class Points extends Array {
     merge(...otherPoints) {
         this.push(...[].concat(...otherPoints));
     }
+
+    toArray() {
+        return [...this];
+    }
 }
 
 module.exports = Points;

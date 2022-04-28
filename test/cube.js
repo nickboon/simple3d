@@ -17,7 +17,7 @@ class Cube extends Solid {
             new Point(halfW, -halfW, halfW),
             new Point(-halfW, -halfW, halfW),
             new Point(-halfW, halfW, halfW),
-            new Point(halfW, halfW, halfW),
+            new Point(halfW, halfW, halfW)
         ];
 
         this.points.push(...points);

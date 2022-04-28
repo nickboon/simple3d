@@ -12,6 +12,11 @@ class Solid {
         this.opacity = opacity;
         this.points = new Points([], rotationIncrements);
         this.paths = [];
+    };
+
+    merge(...otherSolids) {
+        this.points.merge(...otherSolids.map(s => s.points));
+        this.paths = this.paths.concat(...otherSolids.map(s => s.paths));
     }
 }
 
